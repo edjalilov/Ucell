@@ -1,0 +1,365 @@
+@import "./mixins.scss";
+@import "./let.scss";
+@import "./reset.scss";
+@import "../webfonts/stylesheet.css";
+
+body {
+  font-family: "Roboto";
+  font-weight: $regular;
+}
+
+.show {
+  @include flex-center;
+  position: absolute;
+  right: 15px;
+  top: 38px;
+  vertical-align: middle;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  @include sm-575 {
+    top: 30px;
+  }
+  .fa-eye {
+    display: none;
+    color: $purple;
+  }
+  .fa-eye-slash {
+    color: $purple;
+  }
+}
+
+.show2 {
+  .fa-eye {
+    color: $white;
+  }
+  .fa-eye-slash {
+    color: $white;
+  }
+}
+
+.particles {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+}
+.error {
+  font-size: 12px;
+  color: #ea4335;
+  margin-bottom: 0;
+}
+
+.error-border {
+  box-sizing: inherit;
+  border: 1px solid #ea4335 !important;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  background: rgba($black, 0.8);
+  width: 100%;
+  height: 100%;
+}
+
+.form-toggle {
+  z-index: 80;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: $white;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  transform-origin: center;
+  transform: translate(0, -25%) scale(0);
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  @include sm-575 {
+    top: 35px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+  }
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 4px;
+    background: $purple;
+    transform: translate(-50%, -50%);
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &.visible {
+    transform: translate(0, -25%) scale(1);
+    opacity: 1;
+  }
+}
+
+.header {
+  background: $white;
+  &-nav {
+    position: fixed;
+    &__logo {
+      width: 360px;
+      @include sm-575 {
+        width: 250px;
+      }
+    }
+  }
+  &-form {
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $white;
+    width: 600px;
+    height: 612px;
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba($black, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+    @include md-767 {
+      width: 92%;
+    }
+    @include sm-575 {
+      height: 486px;
+    }
+    input {
+      outline: none;
+      display: block;
+      background: rgba($black, 0.1);
+      width: 100%;
+      border: 0;
+      border-radius: 4px;
+      box-sizing: border-box;
+      padding: 12px 20px;
+      color: $gray;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: $semibold;
+      line-height: inherit;
+      transition: 0.3s ease;
+      @include sm-575 {
+        height: 35px;
+      }
+      &:focus {
+        color: $dark-gray;
+      }
+      .reg & {
+        color: $white;
+        &:focus {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+.form-panel {
+  padding: 100px calc(5% + 60px) 60px 60px;
+  box-sizing: border-box;
+  @include sm-575 {
+    padding: 60px calc(5% + 35px) 35px 35px;
+  }
+  &__header {
+    margin: 0 0 40px;
+  }
+  &__title {
+    color: $purple;
+    font-size: 24px;
+    font-weight: $bold;
+    text-transform: uppercase;
+    @include sm-575 {
+      font-size: 17px;
+    }
+    .reg & {
+      position: relative;
+      z-index: 40;
+      color: $white;
+    }
+  }
+  &.auth {
+    &:before {
+      @extend .overlay;
+      content: "";
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+    }
+    &.hidden {
+      &:before {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  &.reg {
+    z-index: 70;
+    position: absolute;
+    top: 0;
+    left: 95%;
+    background: $purple;
+    width: 100%;
+    min-height: 100%;
+    padding: 23px calc(10% + 60px) 60px 60px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    @include sm-575 {
+      padding: 35px calc(10% + 35px) 35px 35px;
+    }
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 60px;
+      left: 1.5%;
+      background: rgba($white, 0.2);
+      height: 30px;
+      width: 2px;
+      transition: 0.3s ease;
+    }
+    &:after {
+      left: 3%;
+    }
+    &:hover {
+      left: 93%;
+      box-shadow: 0 0 10px rgba($black, 0.2);
+      &:before,
+      &:after {
+        opacity: 0;
+      }
+    }
+    &.active {
+      left: 10%;
+      box-shadow: 0 0 10px rgba($black, 0.2);
+      cursor: default;
+      &:before,
+      &:after {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 0 20px;
+  #usernameReg,
+  #passwordReg,
+  #passwordConfirm,
+  #email {
+    color: $white;
+  }
+  &:last-child {
+    margin: 0;
+  }
+  &__title {
+    display: block;
+    margin: 0 0 10px;
+    color: $gray;
+    font-size: 12px;
+    font-weight: $semibold;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    @include sm-575 {
+      letter-spacing: 0.1em;
+    }
+    .reg & {
+      color: $white;
+    }
+  }
+  &__btn {
+    outline: none;
+    background: $purple;
+    width: 100%;
+    border: 0;
+    border-radius: 4px;
+    padding: 12px 20px;
+    color: $white;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: $semibold;
+    line-height: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+    @include sm-575 {
+      height: 35px;
+      padding: 0;
+      font-size: 14px;
+    }
+    .reg & {
+      background: $white;
+      color: $purple;
+    }
+  }
+  &__remember {
+    @include flex-center;
+    font-size: 12px;
+    font-weight: $regular;
+    letter-spacing: 0;
+    text-transform: none;
+    @include sm-575 {
+      margin-bottom: 0;
+    }
+    input[type="checkbox"] {
+      display: inline-block;
+      width: auto;
+      margin: 0 10px 0 0;
+    }
+  }
+  &__recovery {
+    color: $gray;
+    font-size: 12px;
+    text-decoration: none;
+    transition: 0.5s;
+    &:hover {
+      color: $purple;
+    }
+    @include sm-575 {
+      line-height: 32px;
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  padding: 25px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: $purple;
+  color: $white;
+  @include sm-575 {
+    padding: 17px 0;
+  }
+  &-text {
+    font-size: 14px;
+    @include sm-575 {
+      font-size: 11px;
+    }
+  }
+}
